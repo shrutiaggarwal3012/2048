@@ -1,0 +1,14 @@
+/* Empty. Add your own CSS if you like */
+.button {
+	margin: 7px;
+}
+
+.col {
+	width: 80px;
+	height: 80px;
+	border: grey solid 1px;
+}
+
+.card {
+	margin-top: 50px;
+}
