@@ -30,6 +30,9 @@ var elem = document.getElementById('2048grid');
 
   function swipeRight(){
     alert('swipe right ');
+    //var affectedCols = $scope.GridData.rightSwipe ;
+    computeGrid(0);
+    $scope.GridData.currentGridBlocks[5]=10;
   }
 
   function swipeUp(){
@@ -46,84 +49,48 @@ var elem = document.getElementById('2048grid');
     ionic.onGesture('swipedown', swipeDown, elem);
   }
 
+  function computeSectionRightSwipe(a) {
+    var b = [];
+    for(var i=a.length-1; i>=0; i--){
+        if(a[i] != 0){
+            if(b[b.length-1] == a[i]){
+                b[b.length-1] *= 2;
+            } else {
+                b.push(a[i]);
+            }
+        }
+    }
+    b.reverse();
+    for(i=b.length; i<4; i++){
+        b.unshift(0);
+    }
+    return b;
+  }
+
+  $scope.test = function() {
+   $scope.GridData.currentGridBlocks[4]=8;
+   $scope.GridData.currentGridBlocks[7]=12; 
+   computeGrid(0);
+  }
+
+  function computeGrid(firstIndex) {
+    var affectedSection = $scope.GridData.currentGridBlocks.slice(firstIndex,4)
+    affectedSection = computeSectionRightSwipe(affectedSection) ;
+    $scope.GridData.currentGridBlocks.splice(firstIndex, 4, affectedSection[0], affectedSection[1],
+    affectedSection[2], affectedSection[3]);
+    console.log($scope.GridData.currentGridBlocks);
+  }
+
 $scope.GridData = {
-    blocks: [
-              {
-                  isActive: true,
-                  value: 2
-              }, 
-              {
-                  isActive: false,
-                  value: 0
-              },
-                            {
-                  isActive: false,
-                  value: 0
-              }, 
-              {
-                  isActive: false,
-                  value: 0
-              },
-              {
-                  isActive: false,
-                  value: 0
-              },
-                            {
-                  isActive: false,
-                  value: 0
-              }, 
-              {
-                  isActive: false,
-                  value: 0
-              },
-              {
-                  isActive: false,
-                  value: 0
-              },
-                            {
-                  isActive: false,
-                  value: 0
-              }, 
-              {
-                  isActive: false,
-                  value: 0
-              },
-              {
-                  isActive: false,
-                  value: 0
-              },
-                            {
-                  isActive: false,
-                  value: 0
-              }, 
-              {
-                  isActive: false,
-                  value: 0
-              },
-              {
-                  isActive: false,
-                  value: 0
-              },
-                            {
-                  isActive: false,
-                  value: 0
-              }, 
-              {
-                  isActive: false,
-                  value: 0
-              },
-              {
-                  isActive: false,
-                  value: 0
-              },
-                            {
-                  isActive: false,
-                  value: 0
-              }, 
-              {
-                  isActive: false,
-                  value: 0
-              }
-            ]
-};
+    colsCount : 4,
+    leftRightSwipe: [0,4,8,12],
+    blocks : [2,4,0,0,
+              0,0,0,0,
+              0,0,0,0,
+              0,0,0,0],
+    currentGridBlocks :  [2,2,2,2,
+                          0,0,0,0,
+                          0,0,0,0,
+                          0,0,0,0],
+  } ;
 });
